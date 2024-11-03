@@ -1,70 +1,164 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+  ScrollView,
+} from "react-native";
+import { auth } from "@/firebase";
+import { useRouter } from "expo-router";
+import { signOut } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { User } from "@/types";
+import { Ionicons } from "@expo/vector-icons";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+export default function ProfileScreen() {
+  const [user, setUser] = useState<User>();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-export default function HomeScreen() {
+  const fetchUser = async () => {
+    try {
+      const userData = await AsyncStorage.getItem("user");
+      if (userData) {
+        const user = JSON.parse(userData);
+        setUser(user);
+      }
+    } catch (error) {
+      console.error("Error retrieving user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const handleSignOut = async () => {
+    setLoading(true);
+    try {
+      await AsyncStorage.removeItem("user");
+      await signOut(auth);
+      router.replace("/(auth)/sign-in");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View className="flex-1 bg-gray-100 justify-between">
+      <ScrollView className="flex-1 flex-col gap-3 p-2">
+        {/* Header Section */}
+        <View className="relative">
+          {/* <View className="h-[180px] bg-blue-600">
+            <TouchableOpacity className="bg-black/50 p-2 rounded-full">
+              <MaterialIcons name="edit" size={20} color="#FFF" />
+            </TouchableOpacity>
+          </View> */}
+
+          {/* Profile Image & Name Section */}
+          <View className="items-center p-4">
+            <View className="relative items-center">
+              <Image
+                source={{ uri: user?.providerData[0].photoURL }}
+                className="w-32 h-32 rounded-full border-2 border-gray-300"
+              />
+              <Text className="text-2xl font-bold mt-2 text-gray-800">
+                {user?.displayName}
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Main Content */}
+        <View className="flex flex-col justify-center p-2">
+          {/* Profile Details Section */}
+          <View className="bg-gray-200 rounded-2xl p-5 shadow-sm mb-6">
+            <Text className="text-xl font-bold text-gray-800 mb-4">
+              Profile Details
+            </Text>
+
+            <View className="flex flex-col rounded-2xl bg-white">
+              <View className="flex flex-row gap-3 items-center p-3">
+                <Ionicons name="person" size={24} color="#3B82F6" />
+                <View className="flex-1">
+                  <Text className="text-sm text-gray-500">Display Name</Text>
+                  <Text className="text-base font-medium text-gray-800">
+                    {user?.displayName}
+                  </Text>
+                </View>
+              </View>
+
+              <View className="flex flex-row gap-3 items-center p-3">
+                <Ionicons name="mail" size={24} color="#3B82F6" />
+                <View className="flex-1">
+                  <Text className="text-sm text-gray-500">Email</Text>
+                  <Text className="text-base font-medium text-gray-800">
+                    {user?.email}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          {/* Account Info Section */}
+          <View className="bg-gray-200 rounded-2xl p-5 shadow-sm mb-6">
+            <Text className="text-xl font-bold text-gray-800 mb-4">
+              Account Information
+            </Text>
+
+            <View className="flex flex-col rounded-2xl bg-white">
+              <View className="flex flex-row gap-3 items-center p-3">
+                <Ionicons name="calendar" size={24} color="#3B82F6" />
+                <View className="flex-1">
+                  <Text className="text-sm text-gray-500">Joined Date</Text>
+                  <Text className="text-base font-medium text-gray-800">
+                    {new Date(
+                      parseInt(user?.createdAt as string)
+                    ).toLocaleString()}
+                  </Text>
+                </View>
+              </View>
+
+              <View className="flex flex-row gap-3 items-center p-3">
+                <Ionicons name="time" size={24} color="#3B82F6" />
+                <View className="flex-1">
+                  <Text className="text-sm text-gray-500">Last Login</Text>
+                  <Text className="text-base font-medium text-gray-800">
+                    {new Date(
+                      parseInt(user?.lastLoginAt as string)
+                    ).toLocaleString()}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          {/* Logout Button */}
+        </View>
+      </ScrollView>
+
+      <TouchableOpacity
+        className={`h-12 rounded-lg justify-center items-center ml-4 mr-4 mb-4 ${
+          loading ? "bg-blue-400" : "bg-blue-500"
+        }`}
+        onPress={handleSignOut}
+        disabled={loading}
+      >
+        {loading ? (
+          <View className="flex-row items-center">
+            <ActivityIndicator size="small" color="white" />
+            <Text className="text-white text-base font-semibold ml-2">
+              Logging out...
+            </Text>
+          </View>
+        ) : (
+          <Text className="text-white text-base font-semibold">Log Out</Text>
+        )}
+      </TouchableOpacity>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

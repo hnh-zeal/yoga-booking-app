@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "yoga-booking",
-    "slug": "yoga-booking",
+    "name": "yoga-booking-app",
+    "slug": "yoga-booking-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
