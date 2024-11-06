@@ -16,12 +16,16 @@ const ClassItem = ({ yogaClass }: { yogaClass: YogaClass }) => {
     <View className="flex-row rounded-xl items-center gap-4 mt-2">
       {yogaClass.imageUrl ? (
         <Image
-          source={{ uri: yogaClass.imageUrl }}
+          source={{
+            uri: yogaClass.imageUrl
+              ? `data:image/jpeg;base64,${yogaClass.imageUrl}`
+              : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
+          }}
           className="w-16 h-16 rounded-xl"
         />
       ) : (
-        <View className="w-16 h-16 rounded-xl bg-indigo-200 justify-center items-center">
-          <Text className="text-indigo-600 text-2xl">🧘</Text>
+        <View className="w-16 h-16 rounded-xl bg-teal-200 justify-center items-center">
+          <Text className="text-teal-600 text-2xl">🧘</Text>
         </View>
       )}
       <View className="flex-1">
@@ -31,7 +35,7 @@ const ClassItem = ({ yogaClass }: { yogaClass: YogaClass }) => {
         <Text className="text-sm text-gray-600 mt-1">
           {classDate} at {yogaClass.course?.time}
         </Text>
-        <Text className="text-sm text-indigo-600 mt-1">
+        <Text className="text-sm text-teal-600 mt-1">
           {yogaClass.course?.duration} mins • {yogaClass.teacher}
         </Text>
       </View>
@@ -51,7 +55,7 @@ export const BookingItem: React.FC<BookingItemProps> = ({ item }) => {
     <View className="bg-white rounded-2xl shadow-lg mb-6 overflow-hidden">
       <View className="flex-row justify-between items-center gap-4 p-4">
         <View className="flex-1 flex-row items-center gap-2">
-          <Ionicons name="bookmark" size={24} color="#4F46E5" />
+          <Ionicons name="bookmark" size={24} color="#38B2AC" />
           <Text className="text-xl font-bold text-gray-800">
             Booking #{item.id}
           </Text>
@@ -72,9 +76,9 @@ export const BookingItem: React.FC<BookingItemProps> = ({ item }) => {
         {hasMoreClasses && (
           <TouchableOpacity
             onPress={() => setExpanded(!expanded)}
-            className="py-3 bg-indigo-100 rounded-xl"
+            className="py-3 bg-teal-100 rounded-xl"
           >
-            <Text className="text-indigo-600 text-base font-semibold text-center">
+            <Text className="text-teal-600 text-base font-semibold text-center">
               {expanded
                 ? "Show Less"
                 : `Show ${item.classes.length - 1} More Classes`}
@@ -92,8 +96,8 @@ export const BookingItem: React.FC<BookingItemProps> = ({ item }) => {
           onPress={() => router.push(`/(tabs)/bookings/${item.id}`)}
           className="flex-row items-center space-x-1"
         >
-          <Text className="text-indigo-600 font-semibold">View Details</Text>
-          <Ionicons name="chevron-forward" size={20} color="#4F46E5" />
+          <Text className="text-teal-600 font-semibold">View Details</Text>
+          <Ionicons name="chevron-forward" size={20} color="#38B2AC" />
         </TouchableOpacity>
       </View>
     </View>

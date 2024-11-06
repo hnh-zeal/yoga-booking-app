@@ -4,21 +4,20 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack, useRouter, useSegments } from "expo-router";
+import { Stack, Slot, useRouter, useSegments } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { onAuthStateChanged } from "firebase/auth";
 import { User } from "@/types";
-
 import { auth } from "@/firebase";
 import "../global.css";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-function useProtectedRoute(user: User | any, authInitialized: boolean) {
+function useProtectedRoute(user: User | null, authInitialized: boolean) {
   const segments = useSegments();
   const router = useRouter();
 
@@ -30,14 +29,13 @@ function useProtectedRoute(user: User | any, authInitialized: boolean) {
     if (!user && !inAuthGroup) {
       router.replace("/(auth)/sign-in");
     } else if (user && inAuthGroup) {
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/classes");
     }
   }, [user, segments, authInitialized]);
 }
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [authInitialized, setAuthInitialized] = useState(false);
 
@@ -61,37 +59,16 @@ export default function RootLayout() {
     }
   }, [loaded, authInitialized]);
 
-  useEffect(() => {
-    if (authInitialized) {
-      if (user) {
-        router.replace("/(tabs)/classes");
-      } else {
-        router.replace("/(auth)/sign-up");
-      }
-    }
-  }, [authInitialized, user, router]);
-
   if (!loaded || !authInitialized) {
-    return null;
+    return <Slot />;
   }
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
-        <Stack.Screen
-          name="(auth)"
-          options={{
-            headerShown: false,
-            gestureEnabled: false,
-          }}
-        />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>

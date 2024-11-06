@@ -49,7 +49,7 @@ export default function SignIn() {
 
   return (
     <View className="flex-1 bg-white p-6 justify-center">
-      <Text className="text-3xl font-bold text-center text-gray-800 mb-8">
+      <Text className="text-3xl font-bold text-center text-teal-600 mb-8">
         Welcome Back
       </Text>
 
@@ -71,7 +71,7 @@ export default function SignIn() {
 
       <TouchableOpacity
         className={`w-full h-12 rounded-lg justify-center items-center mb-4 ${
-          loading ? "bg-blue-400" : "bg-blue-500"
+          loading ? "bg-teal-400" : "bg-teal-500"
         }`}
         onPress={handleSignIn}
         disabled={loading}
@@ -92,7 +92,7 @@ export default function SignIn() {
         onPress={() => router.push("/(auth)/sign-up")}
         className="mt-4"
       >
-        <Text className="text-blue-500 text-center text-base">
+        <Text className="text-teal-500 text-center text-base">
           Don't have an account? Sign Up
         </Text>
       </TouchableOpacity>

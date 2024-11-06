@@ -14,14 +14,18 @@ const ClassCard = ({ yogaClass }: { yogaClass: YogaClass }) => {
   return (
     <View className="bg-white rounded-3xl p-5 mb-5 shadow-lg">
       <View className="flex-row gap-4">
-        {yogaClass.imageUrl ? (
+        {yogaClass.course?.imageUrl ? (
           <Image
-            source={{ uri: yogaClass.imageUrl }}
+            source={{
+              uri: yogaClass.course?.imageUrl
+                ? `data:image/jpeg;base64,${yogaClass.course?.imageUrl}`
+                : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
+            }}
             className="w-24 h-24 rounded-2xl"
           />
         ) : (
-          <View className="w-24 h-24 rounded-2xl bg-indigo-100 justify-center items-center">
-            <Text className="text-4xl">🧘</Text>
+          <View className="w-24 h-24 rounded-2xl bg-teal-100 justify-center items-center">
+            <Text className="text-4xl text-teal-600">🧘</Text>
           </View>
         )}
         <View className="flex-1 flex flex-col justify-center gap-1">
@@ -29,8 +33,8 @@ const ClassCard = ({ yogaClass }: { yogaClass: YogaClass }) => {
             {yogaClass.course?.name || "Yoga Class"}
           </Text>
           <View className="flex flex-row items-center gap-2">
-            <Ionicons name="barbell" size={18} color="#4F46E5" />
-            <Text className="text-base text-indigo-600 font-semibold">
+            <Ionicons name="barbell" size={18} color="#38B2AC" />
+            <Text className="text-base text-teal-600 font-semibold">
               {yogaClass.course?.type}
             </Text>
           </View>
@@ -42,33 +46,33 @@ const ClassCard = ({ yogaClass }: { yogaClass: YogaClass }) => {
 
       <View className="flex-1 mt-3 gap-1">
         <View className="flex-row items-center gap-3">
-          <Ionicons name="calendar" size={18} color="#4F46E5" />
+          <Ionicons name="calendar" size={18} color="#38B2AC" />
           <Text className="text-base text-gray-700">{classDate}</Text>
         </View>
 
         <View className="flex-row items-center gap-3">
-          <Ionicons name="time" size={18} color="#4F46E5" />
+          <Ionicons name="time" size={18} color="#38B2AC" />
           <Text className="text-base text-gray-700">
             {yogaClass.course?.time} • {yogaClass.course?.duration} minutes
           </Text>
         </View>
 
         <View className="flex-row items-center gap-3">
-          <Ionicons name="people" size={18} color="#4F46E5" />
+          <Ionicons name="people" size={18} color="#38B2AC" />
           <Text className="text-base text-gray-700">
             Capacity: {yogaClass.course?.capacity} people
           </Text>
         </View>
 
         <View className="flex-row items-center gap-3">
-          <Ionicons name="pricetag" size={18} color="#4F46E5" />
+          <Ionicons name="pricetag" size={18} color="#38B2AC" />
           <Text className="text-base text-gray-700">
             ${yogaClass.course?.price}
           </Text>
         </View>
 
         {yogaClass.comments && (
-          <View className="flex flex-col gap-2 mt-4 p-4 bg-indigo-50 rounded-xl">
+          <View className="flex flex-col gap-2 mt-4 p-4 bg-teal-50 rounded-xl">
             <Text className="text-md font-bold text-gray-700">Comments</Text>
             <Text className="text-base text-gray-700 italic">
               {yogaClass.comments}
@@ -109,15 +113,15 @@ const BookingDetails: React.FC = () => {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-indigo-50">
-        <ActivityIndicator size="large" color="#4F46E5" />
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <ActivityIndicator size="large" color="#38B2AC" />
       </View>
     );
   }
 
   if (!booking) {
     return (
-      <View className="flex-1 justify-center items-center bg-indigo-50">
+      <View className="flex-1 justify-center items-center bg-gray-100">
         <Text className="text-xl text-gray-600">
           Booking details not available.
         </Text>
@@ -127,11 +131,11 @@ const BookingDetails: React.FC = () => {
 
   return (
     <ScrollView
-      className="flex-1 bg-indigo-50"
+      className="flex-1 bg-gray-100"
       showsVerticalScrollIndicator={false}
     >
       <LinearGradient
-        colors={["#4F46E5", "#7C3AED"]}
+        colors={["#38B2AC", "#319795"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         className="p-6 rounded-b-3xl"
@@ -141,11 +145,11 @@ const BookingDetails: React.FC = () => {
             Booking ID #{booking.id}
           </Text>
         </View>
-        <Text className="text-lg text-indigo-100">
+        <Text className="text-lg text-teal-100">
           Booked on
           {`${new Date(booking.createdAt).toLocaleString(dateOptions)}`}
         </Text>
-        <Text className="text-lg text-indigo-100 mt-2">
+        <Text className="text-lg text-teal-100 mt-2">
           {booking.classes.length}{" "}
           {booking.classes.length === 1 ? "class" : "classes"}
         </Text>

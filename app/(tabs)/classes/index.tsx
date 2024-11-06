@@ -131,7 +131,7 @@ export default function ClassesScreen() {
         <View className="flex-1 px-2">
           {loading ? (
             <View className="flex-1 justify-center items-center">
-              <ActivityIndicator size="large" color="#4F46E5" />
+              <ActivityIndicator size="large" color="#4FD1C5" />
             </View>
           ) : (
             <FlatList

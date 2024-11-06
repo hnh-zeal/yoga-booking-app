@@ -34,7 +34,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         mode="contained"
         icon="filter"
         size={24}
-        iconColor="#4F46E5"
+        iconColor="#4FD1C5"
         onPress={onFilterPress}
         style={{ marginLeft: 10 }}
       />

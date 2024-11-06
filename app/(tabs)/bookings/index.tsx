@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { View, FlatList, ActivityIndicator } from "react-native";
+import { View, FlatList, ActivityIndicator, Text } from "react-native";
 import { Booking } from "@/types";
 import { fetchBooking } from "@/firebase/api";
 import Toast from "react-native-toast-message";
@@ -62,7 +62,13 @@ export default function BookingScreen() {
         <View className="flex-1 px-2">
           {loading ? (
             <View className="flex-1 justify-center items-center">
-              <ActivityIndicator size="large" color="#4F46E5" />
+              <ActivityIndicator size="large" color="#4FD1C5" />
+            </View>
+          ) : booking.length === 0 ? (
+            <View className="flex-1 justify-center items-center">
+              <Text className="text-center text-gray-500">
+                No bookings available
+              </Text>
             </View>
           ) : (
             <FlatList

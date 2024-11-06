@@ -11,7 +11,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#4CAF50",
+        tabBarActiveTintColor: "#4FD1C5",
         headerShown: true,
       }}
     >
@@ -24,7 +24,7 @@ export default function TabLayout() {
             <Link href="/cart" asChild>
               <TouchableOpacity>
                 <View className="mr-4">
-                  <Ionicons name="cart" size={24} color="#4F46E5" />
+                  <Ionicons name="cart" size={24} color="#4FD1C5" />
                   {cart.length > 0 && (
                     <View className="absolute -top-1 -right-2 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center">
                       <Text className="text-white text-xs font-bold">
@@ -51,7 +51,7 @@ export default function TabLayout() {
             <Link href="/cart" asChild>
               <TouchableOpacity>
                 <View className="mr-4">
-                  <Ionicons name="cart" size={24} color="#4F46E5" />
+                  <Ionicons name="cart" size={24} color="#4FD1C5" />
                   {cart.length > 0 && (
                     <View className="absolute -top-1 -right-2 bg-red-500 rounded-full w-5 h-5 flex items-center justify-center">
                       <Text className="text-white text-xs font-bold">
@@ -69,7 +69,7 @@ export default function TabLayout() {
                 onPress={() => router.replace("/(tabs)/classes")}
                 style={{ marginLeft: 10 }}
               >
-                <Ionicons name="chevron-back" size={24} color="#4F46E5" />
+                <Ionicons name="chevron-back" size={24} color="#4FD1C5" />
               </TouchableOpacity>
             );
           },
@@ -89,7 +89,7 @@ export default function TabLayout() {
                 onPress={() => router.replace("/(tabs)/classes")}
                 style={{ marginLeft: 10 }}
               >
-                <Ionicons name="chevron-back" size={24} color="#4F46E5" />
+                <Ionicons name="chevron-back" size={24} color="#4FD1C5" />
               </TouchableOpacity>
             );
           },
@@ -116,7 +116,7 @@ export default function TabLayout() {
                 onPress={() => router.replace("/(tabs)/bookings")}
                 style={{ marginLeft: 10 }}
               >
-                <Ionicons name="chevron-back" size={24} color="#4F46E5" />
+                <Ionicons name="chevron-back" size={24} color="#4FD1C5" />
               </TouchableOpacity>
             );
           },

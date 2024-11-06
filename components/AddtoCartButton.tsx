@@ -41,7 +41,7 @@ export const AddToCartButton: React.FC<AddToCartButtonProps> = ({ item }) => {
   return (
     <TouchableOpacity
       onPress={handleAddToCart}
-      className="bg-indigo-600 px-6 py-3 rounded-full"
+      className="bg-teal-500 px-6 py-3 rounded-full"
     >
       <Text className="text-white font-semibold text-center">Add to Cart</Text>
     </TouchableOpacity>

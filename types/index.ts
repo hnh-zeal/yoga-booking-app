@@ -19,6 +19,7 @@ export interface YogaCourse {
   price: number;
   time: string;
   capacity: number;
+  imageUrl?: string;
   description?: string;
   createdAt: Date;
   updatedAt: Date;

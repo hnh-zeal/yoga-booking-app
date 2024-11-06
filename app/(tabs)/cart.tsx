@@ -49,7 +49,9 @@ export default function CartScreen() {
       <View className="bg-white rounded-2xl mb-4 p-4 flex-row items-center">
         <Image
           source={{
-            uri: item?.imageUrl || "https://via.placeholder.com/100x100",
+            uri: item.imageUrl
+              ? `data:image/jpeg;base64,${item.imageUrl}`
+              : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
           }}
           className="w-28 h-28 rounded-full border-4 border-white"
         />
@@ -60,7 +62,7 @@ export default function CartScreen() {
           <Text className="text-gray-600">{item.course?.time}</Text>
         </View>
         <View className="items-end">
-          <Text className="text-lg font-bold text-indigo-600 mb-2">
+          <Text className="text-lg font-bold text-teal-600 mb-2">
             ${item.course?.price}
           </Text>
           <TouchableOpacity
@@ -133,7 +135,7 @@ export default function CartScreen() {
         <View className="p-4 bg-white border-t border-gray-200">
           <View className="flex-row justify-between items-center mb-4">
             <Text className="text-lg font-semibold">Total:</Text>
-            <Text className="text-xl font-bold text-indigo-600">
+            <Text className="text-xl font-bold text-teal-600">
               ${totalPrice.toFixed(2)}
             </Text>
           </View>
@@ -150,7 +152,7 @@ export default function CartScreen() {
 
             <TouchableOpacity
               className={`rounded-lg justify-center items-center py-4 mb-3 flex-1 ${
-                loading ? "bg-blue-400" : "bg-blue-500"
+                loading ? "bg-teal-400" : "bg-teal-500"
               }`}
               onPress={checkOut}
               disabled={loading}

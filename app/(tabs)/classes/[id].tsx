@@ -75,15 +75,15 @@ const YogaClassDetails: React.FC = () => {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-indigo-50">
-        <ActivityIndicator size="large" color="#4F46E5" />
+      <View className="flex-1 justify-center items-center bg-gray-100">
+        <ActivityIndicator size="large" color="#4FD1C5" />
       </View>
     );
   }
 
   if (!yogaClass) {
     return (
-      <View className="flex-1 justify-center items-center bg-indigo-50">
+      <View className="flex-1 justify-center items-center bg-gray-100">
         <Text className="text-xl text-gray-600">
           Booking details not available.
         </Text>
@@ -98,9 +98,9 @@ const YogaClassDetails: React.FC = () => {
         <View className="relative h-[300px]">
           <Image
             source={{
-              uri:
-                yogaClass.imageUrl ||
-                "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
+              uri: yogaClass?.course?.imageUrl
+                ? `data:image/jpeg;base64,${yogaClass.course.imageUrl}`
+                : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
             }}
             className="w-full h-full"
             resizeMode="cover"
@@ -115,7 +115,7 @@ const YogaClassDetails: React.FC = () => {
             </Text>
             <View className="flex flex-row items-center gap-2">
               <Text className="text-lg font-bold text-gray-800">Type: </Text>
-              <Text className="text-blue-600 font-medium">
+              <Text className="text-teal-600 font-medium">
                 {yogaClass.course?.type}
               </Text>
             </View>
@@ -133,8 +133,16 @@ const YogaClassDetails: React.FC = () => {
 
           {/* Teacher Info */}
           <View className="flex flex-row items-center gap-4">
-            <View className="w-12 h-12 bg-gray-100 rounded-full items-center justify-center">
-              <Ionicons name="person" size={28} color="#4B5563" />
+            <View className="w-12 h-12 bg-teal-100 rounded-full items-center justify-center overflow-hidden">
+              <Image
+                source={{
+                  uri: yogaClass.imageUrl
+                    ? `data:image/jpeg;base64,${yogaClass.imageUrl}`
+                    : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
+                }}
+                className="w-full h-full rounded-full"
+                resizeMode="cover"
+              />
             </View>
             <View className="flex-1 flex-col justify-center gap-1">
               <Text className="text-sm text-gray-500">Instructor</Text>
@@ -145,7 +153,7 @@ const YogaClassDetails: React.FC = () => {
           </View>
 
           {/* Date Information */}
-          <View className="flex flex-col gap-4 bg-gray-50 rounded-2xl p-4">
+          <View className="flex flex-col gap-4 bg-teal-50 rounded-2xl p-4">
             <Text className="text-lg font-bold text-gray-800">
               Class Details
             </Text>
@@ -153,8 +161,8 @@ const YogaClassDetails: React.FC = () => {
             {/* Date */}
             <View className="flex-row justify-between items-center">
               <View className="flex flex-row items-center gap-4">
-                <View className="w-10 h-10 bg-blue-100 rounded-full items-center justify-center">
-                  <Ionicons name="calendar" size={20} color="#3B82F6" />
+                <View className="w-10 h-10 bg-teal-100 rounded-full items-center justify-center">
+                  <Ionicons name="calendar" size={20} color="#14B8A6" />
                 </View>
                 <View className="flex-1 flex-col justify-center gap-1">
                   <Text className="text-sm text-gray-500">Date</Text>
@@ -169,8 +177,8 @@ const YogaClassDetails: React.FC = () => {
             <View className="flex flex-row justify-between items-center gap-2">
               {/* Time Section */}
               <View className="flex-1 flex flex-row items-center gap-4">
-                <View className="w-10 h-10 bg-blue-100 rounded-full items-center justify-center">
-                  <Ionicons name="time" size={20} color="#10B981" />
+                <View className="w-10 h-10 bg-teal-100 rounded-full items-center justify-center">
+                  <Ionicons name="time" size={20} color="#14B8A6" />
                 </View>
                 <View className="flex-col justify-center gap-1">
                   <Text className="text-sm text-gray-500">Time</Text>
@@ -182,8 +190,8 @@ const YogaClassDetails: React.FC = () => {
 
               {/* Duration Section */}
               <View className="flex-1 flex flex-row items-center gap-4">
-                <View className="w-10 h-10 bg-purple-100 rounded-full items-center justify-center">
-                  <Ionicons name="hourglass" size={20} color="#8B5CF6" />
+                <View className="w-10 h-10 bg-teal-100 rounded-full items-center justify-center">
+                  <Ionicons name="hourglass" size={20} color="#14B8A6" />
                 </View>
                 <View className="flex-col justify-center gap-1">
                   <Text className="text-sm text-gray-500">Duration</Text>
@@ -196,10 +204,10 @@ const YogaClassDetails: React.FC = () => {
 
             {/* Capacity and Price */}
             <View className="flex flex-row justify-between items-center gap-2">
-              {/* Time Section */}
+              {/* Capacity Section */}
               <View className="flex-1 flex flex-row items-center gap-4">
-                <View className="w-10 h-10 bg-blue-100 rounded-full items-center justify-center">
-                  <Ionicons name="people" size={20} color="#10B981" />
+                <View className="w-10 h-10 bg-teal-100 rounded-full items-center justify-center">
+                  <Ionicons name="people" size={20} color="#14B8A6" />
                 </View>
                 <View className="flex-col justify-center gap-1">
                   <Text className="text-sm text-gray-500">Capacity</Text>
@@ -209,10 +217,10 @@ const YogaClassDetails: React.FC = () => {
                 </View>
               </View>
 
-              {/* Duration Section */}
+              {/* Price Section */}
               <View className="flex-1 flex flex-row items-center gap-4">
-                <View className="w-10 h-10 bg-purple-100 rounded-full items-center justify-center">
-                  <Ionicons name="pricetag" size={20} color="#8B5CF6" />
+                <View className="w-10 h-10 bg-teal-100 rounded-full items-center justify-center">
+                  <Ionicons name="pricetag" size={20} color="#14B8A6" />
                 </View>
                 <View className="flex-col justify-center gap-1">
                   <Text className="text-sm text-gray-500">Price</Text>
@@ -242,7 +250,7 @@ const YogaClassDetails: React.FC = () => {
       <View className="p-4 border-t border-gray-100">
         <TouchableOpacity
           onPress={handleAddToCart}
-          className="w-full bg-blue-600 py-4 rounded-2xl items-center"
+          className="w-full bg-teal-600 py-4 rounded-2xl items-center"
         >
           <Text className="text-white font-bold text-lg">
             Add to Cart - ${yogaClass.course?.price}

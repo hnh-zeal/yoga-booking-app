@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { View, TextInput, TouchableOpacity, Text, Alert } from "react-native";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRouter } from "expo-router";
 import { auth } from "@/firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -28,6 +37,8 @@ export default function SignUp() {
         displayName: name,
       });
       Alert.alert("Success", "Account created successfully!");
+      const user = userCredential.user;
+      await AsyncStorage.setItem("user", JSON.stringify(user));
       router.replace("/(tabs)/classes");
     } catch (error: any) {
       console.error("Sign Up error:", error);
@@ -39,7 +50,7 @@ export default function SignUp() {
 
   return (
     <View className="flex-1 bg-white p-6 justify-center">
-      <Text className="text-3xl font-bold text-center text-gray-800 mb-8">
+      <Text className="text-3xl font-bold text-center text-teal-600 mb-8">
         Create Account
       </Text>
 
@@ -62,32 +73,36 @@ export default function SignUp() {
         placeholderTextColor="#9CA3AF"
       />
 
-      <TextInput
-        className="w-full h-12 px-4 mb-6 border border-gray-300 rounded-lg text-base"
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        placeholderTextColor="#9CA3AF"
+      <PasswordInput
+        password={password}
+        setPassword={setPassword}
+        placeholder="Enter your password"
       />
 
       <TouchableOpacity
         className={`w-full h-12 rounded-lg justify-center items-center mb-4 ${
-          loading ? "bg-blue-400" : "bg-blue-500"
+          loading ? "bg-teal-400" : "bg-teal-500"
         }`}
         onPress={handleSignUp}
         disabled={loading}
       >
-        <Text className="text-white text-base font-semibold">
-          {loading ? "Creating Account..." : "Sign Up"}
-        </Text>
+        {loading ? (
+          <View className="flex-row items-center">
+            <ActivityIndicator size="small" color="white" />
+            <Text className="text-white text-base font-semibold ml-2">
+              Creating Account...
+            </Text>
+          </View>
+        ) : (
+          <Text className="text-white text-base font-semibold">Sign Up</Text>
+        )}
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => router.push("/(auth)/sign-in")}
         className="mt-4"
       >
-        <Text className="text-blue-500 text-center text-base">
+        <Text className="text-teal-500 text-center text-base">
           Already have an account? Sign In
         </Text>
       </TouchableOpacity>
