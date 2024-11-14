@@ -41,6 +41,7 @@ export interface Booking {
   id: string;
   userId: string;
   email: string;
+  price: number;
   classes: YogaClass[];
   createdAt: Date;
   updatedAt: Date;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { Booking, YogaClass } from "@/types";
 import { useRouter } from "expo-router";
 import { dateOptions, formatDate } from "@/utils/date";
@@ -62,10 +62,11 @@ export const BookingItem: React.FC<BookingItemProps> = ({ item }) => {
         </View>
       </View>
 
-      <View className="flex justify-center px-4">
+      <View className="flex flex-row items-center justify-between px-4">
         <Text className="text-sm text-gray-500">
           Booked on {`${bookingDate}`}
         </Text>
+        <Text className="text-xl font-bold text-teal-600">${item.price}</Text>
       </View>
 
       <View className="flex flex-col px-4 gap-4">

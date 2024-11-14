@@ -236,7 +236,7 @@ const YogaClassDetails: React.FC = () => {
           {yogaClass.comments && (
             <View className="mb-4">
               <Text className="text-lg font-bold text-gray-800 mb-2">
-                Additional Notes
+                Additional Comments
               </Text>
               <Text className="text-gray-600 leading-6">
                 {yogaClass.comments}

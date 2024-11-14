@@ -54,13 +54,15 @@ export const fetchYogaClasses = async (): Promise<YogaClass[]> => {
 export const bookClasses = async (
   userId: String,
   email: string,
-  classes: YogaClass[]
+  classes: YogaClass[],
+  price: number
 ) => {
   try {
     const docRef = await addDoc(collection(db, "booking"), {
       userId,
       email,
       classes,
+      price,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });

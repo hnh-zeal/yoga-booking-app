@@ -16,14 +16,18 @@ export const YogaClassCard: React.FC<YogaClassCardProps> = ({ item }) => {
     <View className="bg-white rounded-2xl shadow-lg mb-6 overflow-hidden border border-teal-100">
       <View className="flex-row justify-between gap-4 p-4">
         <View className="mr-4 relative">
-          <Image
-            source={{
-              uri: item?.imageUrl
-                ? `data:image/jpeg;base64,${item.imageUrl}`
-                : "https://via.placeholder.com/100x100",
-            }}
-            className="w-28 h-28 rounded-full border-4 border-gray-200"
-          />
+          {item?.imageUrl !== "null" ? (
+            <Image
+              source={{
+                uri: `data:image/jpeg;base64,${item.imageUrl}`,
+              }}
+              className="w-28 h-28 rounded-full border-4 border-gray-200"
+            />
+          ) : (
+            <View className="w-28 h-28 rounded-full bg-gray-300 justify-center items-center border-2 border-gray-200">
+              <Ionicons name="person" size={70} color="#FFFFFF" />
+            </View>
+          )}
         </View>
         <View className="flex-1">
           <Text className="text-2xl font-bold mb-1 text-teal-800">

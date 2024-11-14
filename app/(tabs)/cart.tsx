@@ -47,14 +47,18 @@ export default function CartScreen() {
 
     return (
       <View className="bg-white rounded-2xl mb-4 p-4 flex-row items-center">
-        <Image
-          source={{
-            uri: item.imageUrl
-              ? `data:image/jpeg;base64,${item.imageUrl}`
-              : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b",
-          }}
-          className="w-28 h-28 rounded-full border-4 border-white"
-        />
+        {item?.imageUrl !== "null" ? (
+          <Image
+            source={{
+              uri: `data:image/jpeg;base64,${item.imageUrl}`,
+            }}
+            className="w-28 h-28 rounded-full border-4 border-gray-200"
+          />
+        ) : (
+          <View className="w-28 h-28 rounded-full bg-gray-300 justify-center items-center border-2 border-gray-200">
+            <Ionicons name="person" size={70} color="#FFFFFF" />
+          </View>
+        )}
         <View className="flex-1 ml-4">
           <Text className="text-lg font-semibold">{item.course?.name}</Text>
           <Text className="text-gray-600">{item.teacher}</Text>
@@ -81,13 +85,26 @@ export default function CartScreen() {
     0
   );
 
+  const clearItems = () => {
+    Toast.show({
+      type: "success",
+      text1: "Cart Cleared",
+      text2: "You have successfully cleared the cart.",
+      position: "bottom",
+      visibilityTime: 3000,
+      autoHide: true,
+    });
+    clearCart();
+  };
+
   const checkOut = async () => {
     setLoading(true);
     try {
       const response = await bookClasses(
         user?.uid as string,
         user?.email as string,
-        cart
+        cart,
+        totalPrice
       );
       if (response) {
         Toast.show({
@@ -143,7 +160,7 @@ export default function CartScreen() {
           <View className="w-full flex flex-row justify-between items-center">
             <TouchableOpacity
               className="border border-red-500 bg-transparent py-4 rounded-lg mb-3 flex-1 mr-2"
-              onPress={clearCart}
+              onPress={() => clearItems()}
             >
               <Text className="text-red-500 text-center font-semibold">
                 Clear Cart

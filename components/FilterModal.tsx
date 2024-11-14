@@ -95,6 +95,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
                   <View key={index} className="flex-row justify-between">
                     {pair.map((day) => (
                       <TouchableOpacity
+                        activeOpacity={0.8}
                         key={day}
                         className="flex-row items-center p-1 rounded-lg w-[48%]"
                         onPress={() => toggleDaySelection(day)}
@@ -103,6 +104,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
                           status={
                             selectedDays.includes(day) ? "checked" : "unchecked"
                           }
+                          color="#4FD1C5"
                         />
                         <Text className="text-sm ml-1">{day}</Text>
                       </TouchableOpacity>
