@@ -19,7 +19,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       <View className="flex-1 ml-2 relative">
         <TextInput
           className="bg-white border border-gray-300 rounded-full pl-12 pr-4 py-2"
-          placeholder="Search by Teacher or Time"
+          placeholder="Search by Teacher"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
